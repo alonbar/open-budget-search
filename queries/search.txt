@@ -38,12 +38,15 @@ XPOST _search
 
 
 
+
 XPOST _search
-{
+{   
+    "size": 200,
     "query" : {
         "match_all" : {}
     }
 }
+
 
 XPOST _search
 {

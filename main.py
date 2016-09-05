@@ -14,16 +14,31 @@
 
 # [START app]
 from flask import Flask
-from elastic import search_exemption
+import elastic
 import json
 
 
 app = Flask(__name__)
 
+#
+# @app.route('/search/<term>/')
+# def search(term):
+#     return json.dumps(elastic.search(term))
+#
+# @app.route('/search/<term>/<filters>')
+# def search_with_filters(term, filters):
+#     return json.dumps(elastic.search(term))
+#
+#
+# @app.route('/search/<term>/<next_id>')
+# def search_with_next_id(term, next_id):
+#     return json.dumps(elastic.search(term))
 
-@app.route('/search/<term>/')
-def search(term):
-    return json.dumps(search_exemption(term))
+
+@app.route('/search/exemptions/<term>/<filters>/<start_date>/<end_date>/<offset>/<size>')
+def search_exemptions(term, filters, start_date, end_date, offset, size):
+    ret = elastic.search_exemptions(term, filters, start_date, end_date, offset, size)
+    return json.dumps(ret)
 
 
 

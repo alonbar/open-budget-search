@@ -39,8 +39,7 @@ EXEMPTIONS_MAPPING = {
                 'analyzer': 'hebrew'
             },
             'contact_email': {
-                'type': 'string',
-                'index': 'not_analyzed'
+                'type': 'string'
             },
             'description': {
                 'type': 'string',
@@ -59,7 +58,6 @@ EXEMPTIONS_MAPPING = {
             },
             'url': {
                 'type': 'string',
-                'index': 'not_analyzed'
             },
             'subjects': {
                 'type': 'string',
@@ -67,7 +65,7 @@ EXEMPTIONS_MAPPING = {
             },
             'source_currency': {
                 'type': 'string',
-                'index': 'not_analyzed'
+
             },
             'page_title': {
                 'type': 'string',
@@ -78,7 +76,7 @@ EXEMPTIONS_MAPPING = {
             },
             'entity_kind': {
                 'type': 'string',
-                'index': 'not_analyzed'
+
             }
         }
     }
