@@ -18,11 +18,23 @@ TYPES_DATA = [
                 },
                 'regulation': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'supplier': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'supplier_id': {
                     'type': 'long'
@@ -45,47 +57,105 @@ TYPES_DATA = [
                 },
                 'contact': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'contact_email': {
-                    'type': 'string'
+                    'type': 'string',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'description': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'volume': {
                     'type': 'long'
                 },
                 'reason': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'decision': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'url': {
                     'type': 'string',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'subjects': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'source_currency': {
                     'type': 'string',
-
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'page_title': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'entity_id': {
                     'type': 'long'
                 },
                 'entity_kind': {
                     'type': 'string',
-
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 }
             }
         }
@@ -95,14 +165,26 @@ TYPES_DATA = [
         'mapping': {
             'properties': {
                 'code': {
-                    'type': 'string'
+                    'type': 'string',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'year': {
                     'type': 'integer'
                 },
                 'title': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'net_allocated': {
                     'type': 'long'
@@ -170,31 +252,73 @@ TYPES_DATA = [
                 },
                 'group_full': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'group_top': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'class_full': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'group_top': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'class_top': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'kind': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'subkind': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 }
             }
         }
@@ -208,22 +332,46 @@ TYPES_DATA = [
                 },
                 'subject': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'code': {
                     'type': 'string'
                 },
                 'recipient': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'kind': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'title': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'num_used': {
                     'type': 'long'
@@ -235,7 +383,13 @@ TYPES_DATA = [
                     'type': 'string'
                 },
                 'entity_kind': {
-                    'type': 'string'
+                    'type': 'string',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 }
             }
         }
@@ -245,10 +399,22 @@ TYPES_DATA = [
         'mapping': {
             'properties': {
                 'model': {
-                    'type': 'string'
+                    'type': 'string',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'selector': {
-                    'type': 'string'
+                    'type': 'string',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'time': {
                     'type': 'date',
@@ -256,21 +422,39 @@ TYPES_DATA = [
                 },
                 'req_title': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'change_code': {
                     'type': 'long'
                 },
                 'change_title': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'change_type_id': {
                     'type': 'long'
                 },
                 'change_type_name': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'committee_id': {
                     'type': 'long'
@@ -280,7 +464,13 @@ TYPES_DATA = [
                 },
                 'budget_title': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'net_expense_diff': {
                     'type': 'long'
@@ -302,11 +492,23 @@ TYPES_DATA = [
                 },
                 'pending': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'equiv_code': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 }
             }
         }
@@ -320,22 +522,46 @@ TYPES_DATA = [
                 },
                 'subject': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'code': {
                     'type': 'string'
                 },
                 'recipient': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'kind': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'title': {
                     'type': 'string',
-                    'analyzer': 'hebrew'
+                    'analyzer': 'hebrew',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 },
                 'num_used': {
                     'type': 'long'
@@ -347,7 +573,13 @@ TYPES_DATA = [
                     'type': 'string'
                 },
                 'entity_kind': {
-                    'type': 'string'
+                    'type': 'string',
+                    'fields': {
+                        'raw': {
+                            'type': 'string',
+                            'index': 'not_analyzed'
+                        }
+                    }
                 }
             }
         }
