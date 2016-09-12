@@ -1,10 +1,7 @@
 import elasticsearch
-import csv
-import os
-import mappings
 import logging
-import json
 
+INDEX_NAME = 'obudget'
 logger = logging.getLogger('obudget')
 hdlr = logging.FileHandler('obudget.log')
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')

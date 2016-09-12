@@ -1,15 +1,8 @@
+from elastic import get_es_client, logger, INDEX_NAME
+from types_data import TYPES_DATA
 import json
-
-from elastic import get_es_client, logger
-from mappings import EXEMPTIONS_MAPPING, BUDGET_MAPPING, SUPPORT_MAPPING, CHANGES_MAPPING
 import os
 import csv
-
-INDEX_NAME = 'obudget'
-EXEMPTIONS_TYPE = 'exemptions'
-BUDGET_TYPE = 'budget'
-SUPPORTS_TYPE = 'supports'
-CHANGES_TYPE = 'changes'
 
 
 def clean():
@@ -30,14 +23,15 @@ def create_index():
     })
 
 
-def create_mapping(type,doc_body):
+def create_mapping(type, doc_body):
     es = get_es_client()
     es.indices.put_mapping(index=INDEX_NAME, doc_type=type, body=doc_body)
 
 
-def load_tables(tables_path, tables_list):
+def load_tables(tables_path, type_data):
     #assuming table name and table type is the same- should change ?
-    for table in tables_list:
+    for type_obj in type_data:
+        table = type_obj["type_name"]
         load_data(os.path.join(tables_path, table + ".csv"), table)
 
 
@@ -65,18 +59,15 @@ def load_data(input_path, input_type):
 
 
 def map_tables():
-    create_mapping(EXEMPTIONS_TYPE, EXEMPTIONS_MAPPING)
-    create_mapping(BUDGET_TYPE, BUDGET_MAPPING)
-    create_mapping(SUPPORTS_TYPE, SUPPORT_MAPPING)
-    create_mapping(CHANGES_TYPE, CHANGES_MAPPING)
+    for type_obj in TYPES_DATA:
+        create_mapping(type_obj["type_name"], type_obj["mapping"])
 
 
 def initialize_db():
-    tables = [EXEMPTIONS_TYPE, BUDGET_TYPE]
     clean()
     create_index()
     map_tables()
-    load_tables('data', tables)
+    load_tables('data', TYPES_DATA)
 
 
 if __name__ == "__main__":
