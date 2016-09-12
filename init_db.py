@@ -67,7 +67,7 @@ def initialize_db():
     clean()
     create_index()
     map_tables()
-    load_tables('data', TYPES_DATA)
+    # load_tables('data', TYPES_DATA)
 
 
 if __name__ == "__main__":

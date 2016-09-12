@@ -1,39 +1,31 @@
-
-from flask import Flask, request
 import elastic
-import json
+import tornado.ioloop
+import tornado.web
 
 
-app = Flask(__name__)
-
-#
-# @app.route('/search/<term>/')
-# def search(term):
-#     return json.dumps(elastic.search(term))
-#
-# @app.route('/search/<term>/<filters>')
-# def search_with_filters(term, filters):
-#     return json.dumps(elastic.search(term))
-#
-#
-# @app.route('/search/<term>/<next_id>')
-# def search_with_next_id(term, next_id):
-#     return json.dumps(elastic.search(term))
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write("Hello, world")
 
 
-# Search APIs
-
-@app.route('/search/exemption/<term>/<filters>/<start_date>/<end_date>/<offset>/<size>', methods=['GET'])
-def search_exemptions(term, filters, start_date, end_date, offset, size):
-    ret = elastic.search_exemptions(term, filters, start_date, end_date, offset, size)
-    return json.dumps(ret)
+class SearchHandler(tornado.web.RequestHandler):
+    def get(self, search_term):
+        self.write("Hello, %s" % search_term)
 
 
-# Index data API
-@app.route('/index/<type>', methods=['POST'])
-def index_exemption():
-    print request.data, type
-    return "SABABA"
+class IndexDocumentHandler(tornado.web.RequestHandler):
+    def post(self, type_name):
+        data = tornado.escape.json_decode(self.request.body)
+        elastic.index_doc(type_name, data)
 
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080)
+def make_app():
+    return tornado.web.Application([
+        (r"/", MainHandler),
+        (r"/search/(?P<search_term>[^\/]+)", SearchHandler),
+        (r"/index/(?P<type_name>[^\/]+)", IndexDocumentHandler),
+    ])
+
+if __name__ == "__main__":
+    app = make_app()
+    app.listen(8888)
+    tornado.ioloop.IOLoop.current().start()

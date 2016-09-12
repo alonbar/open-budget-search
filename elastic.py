@@ -15,12 +15,19 @@ EXEMPTIONS_FIELDS_LIST = ["publisher", "regulation", "supplier", "contact", "con
 # OLDEST_DATE = "0000-00-00"
 # DEFAULT_SIZE = 3
 
+
 def get_es_client():
     return elasticsearch.Elasticsearch(ES_SERVERS_LIST, timeout=DEFAULT_TIMEOUT)
+
 
 def search(term):
     es = get_es_client()
     return simple_search_exemptions(es, term)
+
+
+def index_doc(type_name, doc):
+    es = get_es_client()
+    return es.index(index=INDEX_NAME, doc_type=type_name, body=doc)
 
 
 def prepare_exemption_query(term, fields, start_date, end_date, search_size, offset):

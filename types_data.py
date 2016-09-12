@@ -200,7 +200,7 @@ TYPES_DATA = [
         }
     },
     {
-        'type_name': 'support',
+        'type_name': 'supports',
         'mapping': {
             'properties': {
                 'year': {
