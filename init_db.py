@@ -32,7 +32,7 @@ def load_tables(tables_path, type_data):
     #assuming table name and table type is the same- should change ?
     for type_obj in type_data:
         table = type_obj["type_name"]
-        load_data(os.path.join(tables_path, table + ".csv"), table)
+        load_data(os.path.join(tables_path, "1_" + table + ".csv"), table)
 
 
 def load_data(input_path, input_type):
