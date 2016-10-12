@@ -52,6 +52,12 @@ def preperare_typed_query(type,term, from_date, to_date, search_size, offset):
                     }
                 },
               "aggs": {
+                  "stats_per_month":{
+                      "date_histogram":{
+                          "field": type_definition["type_name"] + "." + type_definition['date_fields']['from'],
+                          "interval": "month"
+                     }
+                },
                 "filtered": {
                   "filter": {
                     "bool": {
@@ -62,14 +68,7 @@ def preperare_typed_query(type,term, from_date, to_date, search_size, offset):
                           }
                         },
                         {
-                          "range": {
-                                type_definition['date_fields']['from']: {
-                                    "gte": from_date
-                                },
-                                type_definition['date_fields']['to']: {
-                                    "lte": to_date
-                                }
-                            }
+                          "range": type_definition['range_structure']
                         }
                       ]
                     }
@@ -93,45 +92,18 @@ def preperare_typed_query(type,term, from_date, to_date, search_size, offset):
           },
           "size": 0
         }
+
+      range_obj = body["aggs"]["filtered"]["filter"]["bool"]["must"][1]["range"]
+      if type == "exepmtion":
+          range_obj[type_definition['date_fields']['from']]["gte"] = from_date
+          range_obj[type_definition['date_fields']['to']]["lte"] = to_date
+      else:
+          range_obj[type_definition['date_fields']['from']]["gte"] = from_date
+          range_obj[type_definition['date_fields']['to']]["lte"] = to_date
+
+
       print(body)
       return body
-
-
-
-
-def prepare_exemption_query(term, fields, start_date, end_date, search_size, offset):
-    body={
-          "from": offset,
-          "size": int(search_size),
-          "query": {
-            "filtered": {
-              "query": {
-                 "query_string": {
-                    "fields": fields,
-                    "query": term
-                 }
-              },
-              "filter": {
-                "type": { "value" : "exemptions"}
-              },
-                "filter": {
-                  "range": {
-                    "start_date": {
-                        "gte": start_date
-                    },
-                    "end_date": {
-                        "lte": end_date
-                    }
-                }
-              }
-            }
-          },
-        "sort": [
-            { "start_date":   { "order": "desc" , "ignore_unmapped" : True}},
-            { "volume": { "order": "desc", "ignore_unmapped" : True }}
-        ]
-        }
-    return body
 
 
 def parse_highlights(highlights):
@@ -172,16 +144,14 @@ def search(types, term, from_date, to_date, size, offset):
         elastic_result[type] = es.search(index="obudget", body=query_body)
         ret_val[type] = {}
 
-        if elastic_result[type]["hits"]["total"] > 0:
-            # if type == "budget":
-            #     ret_val[type] = parse_budget_result(elastic_result[type])
-            # else:
-                ret_val[type]["total"] = len(elastic_result[type]["aggregations"]["filtered"]["top_results"]["hits"]["hits"])
-                ret_val[type]["docs"] = {}
-                for i, doc in enumerate(elastic_result[type]["aggregations"]["filtered"]["top_results"]["hits"]["hits"]):
-                    ret_val[type]["docs"][i] = {}
-                    ret_val[type]["docs"][i]["source"] = doc["_source"]
-                    ret_val[type]["docs"][i]["highlight"] = parse_highlights(doc["highlight"])
+        ret_val[type]["total_in_time_range"] = len(elastic_result[type]["aggregations"]["filtered"]["top_results"]["hits"]["hits"])
+        ret_val[type]["total_overall"] = elastic_result[type]["hits"]["total"]
+        ret_val[type]["docs"] = {}
+        ret_val[type]["data_time_distribution"] = elastic_result[type]["aggregations"]["stats_per_month"]["buckets"]
+        for i, doc in enumerate(elastic_result[type]["aggregations"]["filtered"]["top_results"]["hits"]["hits"]):
+            ret_val[type]["docs"][i] = {}
+            ret_val[type]["docs"][i]["source"] = doc["_source"]
+            ret_val[type]["docs"][i]["highlight"] = parse_highlights(doc["highlight"])
 
 
     return ret_val

@@ -374,10 +374,11 @@ TYPES_DATA = [
     },
     {
         'type_name': 'supports',
+        'search_fields': ["supports.subject", "supports.code", "supports.recipient", "supports.kind", "supports.title", "supports.entity_id", "supports.entity_kind"],
         'mapping': {
             'properties': {
                 'year': {
-                    'type': 'long'
+                    'type': 'date'
                 },
                 'subject': {
                     'type': 'string',
@@ -390,7 +391,13 @@ TYPES_DATA = [
                     }
                 },
                 'code': {
-                    'type': 'string'
+                     'type': 'string',
+                        'fields': {
+                            'raw': {
+                                'type': 'string',
+                                'index': 'not_analyzed'
+                            }
+                        }
                 },
                 'recipient': {
                     'type': 'string',
@@ -428,6 +435,9 @@ TYPES_DATA = [
                 'amount_allocated': {
                     'type': 'long'
                 },
+                'amount_supported': {
+                    'type': 'long'
+                },
                 'entity_id': {
                     'type': 'string'
                 },
@@ -441,33 +451,44 @@ TYPES_DATA = [
                     }
                 }
             }
-        }
+        },
+        'date_fields': {
+            'from': 'year',
+            'to': 'year'
+        },
+        "range_structure": {
+                            'year': {
+                                "gte": "from_date",
+                                "lte": "to_date"
+                            }
+                        },
+        'sort_method': [
+                        {
+                            "year": {
+                                "order": "desc"
+                            }
+                        },
+                        {
+                            "amount_allocated": {
+                                "order": "desc"
+                            }
+                        }
+                    ]
     },
     {
         'type_name': 'changes',
+        'search_fields': ["changes.req_title", "changes.change_title", "changes.change_type_name", "changes.budget_code", "changes.budget_title"],
         'mapping': {
             'properties': {
-                'model': {
-                    'type': 'string',
-                    'fields': {
-                        'raw': {
-                            'type': 'string',
-                            'index': 'not_analyzed'
-                        }
-                    }
-                },
-                'selector': {
-                    'type': 'string',
-                    'fields': {
-                        'raw': {
-                            'type': 'string',
-                            'index': 'not_analyzed'
-                        }
-                    }
-                },
-                'time': {
+                'year': {
                     'type': 'date',
                     'format': 'date'
+                },
+                'leading_item': {
+                    'type': 'long'
+                },
+                'req_code': {
+                    'type': 'long'
                 },
                 'req_title': {
                     'type': 'string',
@@ -534,55 +555,56 @@ TYPES_DATA = [
                     'type': 'long'
                 },
                 'personnel_max_diff': {
-                    'type': 'long'
+                    'type': 'double'
                 },
                 'date': {
-                    'type': 'string'
+                    'type': 'date',
+                    'format': 'dd/MM/yyyy||yyyy-MM-dd'
                 },
                 'pending': {
-                    'type': 'string',
-                    'analyzer': 'hebrew',
-                    'fields': {
-                        'raw': {
-                            'type': 'string',
-                            'index': 'not_analyzed'
-                        }
-                    }
-                },
-                'equiv_code': {
-                    'type': 'string',
-                    'analyzer': 'hebrew',
-                    'fields': {
-                        'raw': {
-                            'type': 'string',
-                            'index': 'not_analyzed'
-                        }
-                    }
+                    "type": "boolean"
                 }
             }
-        }
+        },
+        'date_fields': {
+            'from': 'date',
+            'to': 'date'
+        },
+        "range_structure": {
+                            'date': {
+                                "gte": "from_date",
+                                "lte": "to_date"
+                            }
+                        },
+        'sort_method': [
+                        {
+                            "date": {
+                                "order": "desc"
+                            }
+                        },
+                        {
+                            "gross_expense_diff": {
+                                "order": "desc"
+                            }
+                        }
+                    ]
     },
     {
         'type_name': 'change_history',
+        'search_fields': ["change_history.model", "change_history.selector", "change_history.field", "change_history.from_value", "change_history.to_value"],
         'mapping': {
             'properties': {
-                'year': {
-                    'type': 'long'
-                },
-                'subject': {
-                    'type': 'string',
-                    'analyzer': 'hebrew',
-                    'fields': {
-                        'raw': {
-                            'type': 'string',
-                            'index': 'not_analyzed'
-                        }
-                    }
-                },
-                'code': {
+                'model': {
                     'type': 'string'
                 },
-                'recipient': {
+                'time': {
+                    'type': 'date',
+                    'format': 'dd/MM/yy||yyyy-MM-dd'
+                },
+                'field': {
+                    'type': 'string',
+                },
+                'from_value': {
                     'type': 'string',
                     'analyzer': 'hebrew',
                     'fields': {
@@ -592,7 +614,7 @@ TYPES_DATA = [
                         }
                     }
                 },
-                'kind': {
+                'to_value': {
                     'type': 'string',
                     'analyzer': 'hebrew',
                     'fields': {
@@ -602,35 +624,27 @@ TYPES_DATA = [
                         }
                     }
                 },
-                'title': {
-                    'type': 'string',
-                    'analyzer': 'hebrew',
-                    'fields': {
-                        'raw': {
-                            'type': 'string',
-                            'index': 'not_analyzed'
-                        }
-                    }
-                },
-                'num_used': {
-                    'type': 'long'
-                },
-                'amount_allocated': {
-                    'type': 'long'
-                },
-                'entity_id': {
-                    'type': 'string'
-                },
-                'entity_kind': {
-                    'type': 'string',
-                    'fields': {
-                        'raw': {
-                            'type': 'string',
-                            'index': 'not_analyzed'
-                        }
-                    }
+                'created': {
+                    'type': 'boolean'
                 }
             }
-        }
+        },
+        'date_fields': {
+            'from': 'time',
+            'to': 'time'
+        },
+        "range_structure": {
+                            'time': {
+                                "gte": "from_date",
+                                "lte": "to_date"
+                            }
+                        },
+        'sort_method': [
+                        {
+                            "time": {
+                                "order": "desc"
+                            }
+                        }
+                    ]
     }
 ]
