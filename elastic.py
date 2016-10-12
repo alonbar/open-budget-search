@@ -154,6 +154,12 @@ def parse_budget_result(elastic_result):
     buget_result = {}
     buget_result["current"]
     buget_result["past"]
+    buget_result["total"] = elastic_result["aggregations"]["filtered"]["top_results"]["hits"]["hits"]
+    for i, doc in enumerate(elastic_result["aggregations"]["filtered"]["top_results"]["hits"]["hits"]):
+                    buget_result[type]["docs"][i] = {}
+                    buget_result[type]["docs"][i]["source"] = doc["_source"]
+                    buget_result[type]["docs"][i]["highlight"] = parse_highlights(doc["highlight"])
+
 
 
 
@@ -167,9 +173,9 @@ def search(types, term, from_date, to_date, size, offset):
         ret_val[type] = {}
 
         if elastic_result[type]["hits"]["total"] > 0:
-            if type == "budget":
-                ret_val[type] = parse_budget_result(elastic_result[type])
-            else:
+            # if type == "budget":
+            #     ret_val[type] = parse_budget_result(elastic_result[type])
+            # else:
                 ret_val[type]["total"] = len(elastic_result[type]["aggregations"]["filtered"]["top_results"]["hits"]["hits"])
                 ret_val[type]["docs"] = {}
                 for i, doc in enumerate(elastic_result[type]["aggregations"]["filtered"]["top_results"]["hits"]["hits"]):

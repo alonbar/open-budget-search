@@ -164,6 +164,14 @@ TYPES_DATA = [
             'from' : 'start_date',
             'to': 'end_date'
         },
+        'range_structure': {
+                            "start_date":{
+                                        "gte": "from_date"
+                                    },
+                            "end_date":{
+                                        "lte": "to_date"
+                                    }
+                            },
         'sort_method':[
                         {
                             "start_date": {
@@ -342,9 +350,15 @@ TYPES_DATA = [
         },
         'search_fields': ["budget.title","budget.req_title", "budget.change_title", "budget.change_type_name", "budget.budget_title", "budget.pending", "budget.properties"],
         'date_fields': {
-            'from': 'from_year',
-            'to': 'to_year'
+            'from': 'year',
+            'to': 'year'
         },
+        "range_structure": {
+                            'year': {
+                                "gte": "from_date",
+                                "lte": "to_date"
+                            }
+                        },
         'sort_method':[
                         {
                             "year": {
